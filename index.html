@@ -2,63 +2,207 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <title>Notation Football APS</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Notation Football APS — COLL2_EQ_04</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">COLL2_EQ_04 · Football APS</p>
+        <h1>Notation automatique — Sports Collectifs</h1>
+      </div>
+      <div class="top-actions">
+        <button id="printBtn" class="btn secondary">Imprimer / PDF</button>
+        <button id="exportBtn" class="btn secondary">Exporter CSV</button>
+        <button id="resetBtn" class="btn danger">Réinitialiser</button>
+      </div>
+    </header>
 
-<div class="app">
-  <h1>Fiche élève — notation automatique</h1>
+    <nav class="tabs">
+      <button class="tab active" data-tab="fiche">Fiche élève</button>
+      <button class="tab" data-tab="classe">Grille classe</button>
+      <button class="tab" data-tab="bareme">Barème</button>
+      <button class="tab" data-tab="aide">Aide</button>
+    </nav>
 
-  <div class="info">
-    <input id="nom" placeholder="Nom élève">
-    <select id="niveau">
-      <option value="">Choisir le niveau</option>
-      <option value="TC">TC</option>
-      <option value="1BAC">1ère BAC</option>
-      <option value="2BAC">2ème BAC</option>
-      <option value="1AC">1AC</option>
-      <option value="2AC">2AC</option>
-      <option value="3AC">3AC</option>
-    </select>
-    <input type="date" id="date">
+    <main>
+      <section id="fiche" class="panel active">
+        <div class="card">
+          <div class="card-title">
+            <h2>Fiche élève — notation automatique</h2>
+            <span id="ficheStatus" class="badge">À compléter</span>
+          </div>
+
+          <div class="form-grid">
+            <label>Nom élève
+              <input id="studentName" type="text" placeholder="Ex: Ahmed Benali" />
+            </label>
+            <label>Niveau
+              <select id="studentLevel">
+                <option value="">Choisir le niveau</option>
+                <option value="TC">TC</option>
+                <option value="1BAC">1ère BAC</option>
+                <option value="2BAC">2ème BAC</option>
+                <option value="1AC">1AC</option>
+                <option value="2AC">2AC</option>
+                <option value="3AC">3AC</option>
+              </select>
+            </label>
+            <label>Date
+              <input id="studentDate" type="date" />
+            </label>
+          </div>
+
+          <div class="notice">Remplir les cellules bleues. Le fichier calcule automatiquement le total brut et la note /20.</div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Critères d'évaluation</th>
+                  <th>Définition</th>
+                  <th>Outils utilisés</th>
+                  <th>Max</th>
+                  <th>Note</th>
+                  <th>Contrôle</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Capacité sportive et habilité motrice</td>
+                  <td>Individuelles</td>
+                  <td>Produit du comportement physique</td>
+                  <td id="maxInd">0</td>
+                  <td><input id="noteInd" class="score-input" type="number" min="0" step="0.25" value="0" /></td>
+                  <td id="checkInd">—</td>
+                </tr>
+                <tr>
+                  <td>Capacité sportive et habilité motrice</td>
+                  <td>Collectives</td>
+                  <td>Grille d'observation</td>
+                  <td id="maxCol">0</td>
+                  <td><input id="noteCol" class="score-input" type="number" min="0" step="0.25" value="0" /></td>
+                  <td id="checkCol">—</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="result-grid">
+            <div class="result-box">
+              <span>Total brut</span>
+              <strong><span id="totalBrut">0</span> / <span id="totalMax">0</span></strong>
+            </div>
+            <div class="result-box">
+              <span>Note /20</span>
+              <strong id="note20">0.00</strong>
+            </div>
+            <div class="result-box">
+              <span>Décision</span>
+              <strong id="decision">À compléter</strong>
+            </div>
+          </div>
+
+          <div class="actions">
+            <button id="saveStudentBtn" class="btn">Ajouter / mettre à jour dans la classe</button>
+            <button id="clearFormBtn" class="btn secondary">Vider la fiche</button>
+          </div>
+        </div>
+      </section>
+
+      <section id="classe" class="panel">
+        <div class="card">
+          <div class="card-title">
+            <h2>Grille classe</h2>
+            <span id="studentCount" class="badge">0 élève</span>
+          </div>
+
+          <div class="toolbar">
+            <input id="searchInput" type="text" placeholder="Rechercher un élève..." />
+            <select id="filterLevel">
+              <option value="">Tous les niveaux</option>
+              <option value="TC">TC</option>
+              <option value="1BAC">1ère BAC</option>
+              <option value="2BAC">2ème BAC</option>
+              <option value="1AC">1AC</option>
+              <option value="2AC">2AC</option>
+              <option value="3AC">3AC</option>
+            </select>
+          </div>
+
+          <div class="table-wrap">
+            <table id="classTable">
+              <thead>
+                <tr>
+                  <th>N°</th>
+                  <th>Nom élève</th>
+                  <th>Niveau</th>
+                  <th>Individuelles</th>
+                  <th>Collectives</th>
+                  <th>Total brut</th>
+                  <th>Note /20</th>
+                  <th>Décision</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="classBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section id="bareme" class="panel">
+        <div class="card">
+          <h2>Barème officiel utilisé</h2>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Définition</th>
+                  <th>Outils utilisés</th>
+                  <th>TC</th>
+                  <th>1ère BAC</th>
+                  <th>2ème BAC</th>
+                  <th>1AC</th>
+                  <th>2AC</th>
+                  <th>3AC</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Individuelles</td>
+                  <td>Produit du comportement physique</td>
+                  <td>06</td><td>06</td><td>07</td><td>06</td><td>06</td><td>06</td>
+                </tr>
+                <tr>
+                  <td>Collectives</td>
+                  <td>Grille d'observation</td>
+                  <td>06</td><td>07</td><td>07</td><td>08</td><td>07</td><td>06</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="legend">TC = Tronc Commun | 1ère BAC / 2ème BAC = Secondaire Qualifiant | 1AC / 2AC / 3AC = Secondaire Collégial | APS concernée : Football</p>
+        </div>
+      </section>
+
+      <section id="aide" class="panel">
+        <div class="card">
+          <h2>Comment utiliser</h2>
+          <ol class="help-list">
+            <li>Dans <strong>Fiche élève</strong>, écrire le nom et choisir le niveau.</li>
+            <li>Entrer la note Individuelles et Collectives.</li>
+            <li>Le total brut et la note /20 se calculent automatiquement.</li>
+            <li>Cliquer sur <strong>Ajouter / mettre à jour</strong> pour sauvegarder l’élève dans la grille classe.</li>
+            <li>Dans <strong>Grille classe</strong>, vous pouvez modifier, supprimer, exporter CSV ou imprimer en PDF.</li>
+          </ol>
+        </div>
+      </section>
+    </main>
   </div>
 
-  <table>
-    <thead>
-      <tr>
-        <th>Critère</th>
-        <th>Définition</th>
-        <th>Outil utilisé</th>
-        <th>Max</th>
-        <th>Note</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>Capacité sportive et habilité motrice</td>
-        <td>Individuelles</td>
-        <td>Produit du comportement physique</td>
-        <td id="maxInd">0</td>
-        <td><input type="number" id="noteInd" min="0" value="0"></td>
-      </tr>
-      <tr>
-        <td>Capacité sportive et habilité motrice</td>
-        <td>Collectives</td>
-        <td>Grille d'observation</td>
-        <td id="maxCol">0</td>
-        <td><input type="number" id="noteCol" min="0" value="0"></td>
-      </tr>
-    </tbody>
-  </table>
-
-  <div class="result">
-    <p>Total brut : <strong id="total">0</strong> / <span id="maxTotal">0</span></p>
-    <p>Note /20 : <strong id="note20">0</strong></p>
-    <p id="status">À compléter</p>
-  </div>
-</div>
-
-<script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
