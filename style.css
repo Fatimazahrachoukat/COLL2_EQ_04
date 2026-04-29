@@ -1,0 +1,72 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #f4f7fb;
+  margin: 0;
+  padding: 30px;
+}
+
+.app {
+  max-width: 1000px;
+  margin: auto;
+  background: white;
+  padding: 25px;
+  border-radius: 14px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+}
+
+h1 {
+  background: #173f6f;
+  color: white;
+  padding: 18px;
+  border-radius: 10px;
+}
+
+.info {
+  display: flex;
+  gap: 15px;
+  margin: 25px 0;
+}
+
+input, select {
+  padding: 12px;
+  border: 1px solid #c7d6e5;
+  border-radius: 8px;
+  font-size: 15px;
+  width: 100%;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+th {
+  background: #1f4e78;
+  color: white;
+  padding: 12px;
+}
+
+td {
+  border: 1px solid #d9e2ec;
+  padding: 12px;
+  text-align: center;
+}
+
+td input {
+  width: 80px;
+  text-align: center;
+}
+
+.result {
+  margin-top: 25px;
+  background: #eaf3ff;
+  padding: 20px;
+  border-radius: 10px;
+  font-size: 18px;
+}
+
+#status {
+  font-weight: bold;
+  color: #173f6f;
+}
