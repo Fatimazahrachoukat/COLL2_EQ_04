@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Notation Football APS</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div class="app">
+  <h1>Fiche élève — notation automatique</h1>
+
+  <div class="info">
+    <input id="nom" placeholder="Nom élève">
+    <select id="niveau">
+      <option value="">Choisir le niveau</option>
+      <option value="TC">TC</option>
+      <option value="1BAC">1ère BAC</option>
+      <option value="2BAC">2ème BAC</option>
+      <option value="1AC">1AC</option>
+      <option value="2AC">2AC</option>
+      <option value="3AC">3AC</option>
+    </select>
+    <input type="date" id="date">
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Critère</th>
+        <th>Définition</th>
+        <th>Outil utilisé</th>
+        <th>Max</th>
+        <th>Note</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Capacité sportive et habilité motrice</td>
+        <td>Individuelles</td>
+        <td>Produit du comportement physique</td>
+        <td id="maxInd">0</td>
+        <td><input type="number" id="noteInd" min="0" value="0"></td>
+      </tr>
+      <tr>
+        <td>Capacité sportive et habilité motrice</td>
+        <td>Collectives</td>
+        <td>Grille d'observation</td>
+        <td id="maxCol">0</td>
+        <td><input type="number" id="noteCol" min="0" value="0"></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="result">
+    <p>Total brut : <strong id="total">0</strong> / <span id="maxTotal">0</span></p>
+    <p>Note /20 : <strong id="note20">0</strong></p>
+    <p id="status">À compléter</p>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
